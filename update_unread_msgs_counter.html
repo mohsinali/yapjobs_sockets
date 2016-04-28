@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>      
+      $(document).ready(function(){        
+        socket = io();
+
+        socket.emit('update_unread_msgs_counter', "506");
+
+        // socket.on('update_unread_msgs_counter', function(msg){          
+        //   alert("From html page.");
+        // });
+      });
+      
+    </script>
+
+  </head>
+  <body>
+    <p>Update unread messages counter.</p>    
+    <script>
+      var socket = io();
+    </script>
+  </body>
+</html>
