@@ -24,7 +24,8 @@ app.get("/update_unread_msgs_counter", function(req, res){
   clients.forEach(function(value){
     console.log("Client in action: " + value);
     if(value.user_id === req.query.user_id){
-      io.sockets.connected[value.socket_id].emit('private', req.query.count);
+      res_obj = { count: req.query.count, msg: req.query.msg, job_seeker_id: req.query.job_seeker_id}
+      io.sockets.connected[value.socket_id].emit('private', res_obj);
     }
   });
 
