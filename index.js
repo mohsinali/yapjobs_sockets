@@ -25,7 +25,13 @@ app.get("/update_unread_msgs_counter", function(req, res){
     console.log("Client in action: " + value);
     if(value.user_id === req.query.user_id){
       res_obj = { count: req.query.count, msg: req.query.msg, job_seeker_id: req.query.job_seeker_id}
-      io.sockets.connected[value.socket_id].emit('private', res_obj);
+      s = io.sockets.connected[value.socket_id]
+      if(s === undefined){
+        console.log("Undefined socket: ");
+      }else{
+        io.sockets.connected[value.socket_id].emit('private', res_obj);
+        console.log("Message emitted to socket: " + value.socket_id);
+      }
     }
   });
 
