@@ -13,6 +13,8 @@ app.get("/connect", function(req, res){
   console.log(req);
 });
 
+// ############################################################
+// Broadcast chat / message
 app.get("/update_unread_msgs_counter", function(req, res){
   // if (io.sockets.connected[socket.id]) {
   //   io.sockets.connected[socket.id].emit('unread_msgs_total', 'for your eyes only');
@@ -39,6 +41,28 @@ app.get("/update_unread_msgs_counter", function(req, res){
   // io.sockets.connected[socket_id].emit('private', req.query.count);
   res.send('Request complete');
 });
+
+// ############################################################
+// Broadcast job application message
+app.get("/job_application_message", function(req, res){
+  console.log("m inside");
+  clients.forEach(function(value){
+    
+    if(value.user_id === req.query.user_id){
+      res_obj = { msg: req.query.msg }
+      s = io.sockets.connected[value.socket_id]
+      if(s === undefined){
+        console.log("Undefined socket: ");
+      }else{
+        io.sockets.connected[value.socket_id].emit('listen_job_application', res_obj);
+        console.log("Message emitted to socket: " + value.socket_id);
+      }
+    }
+  });
+  
+  res.send('Request complete');
+});
+// ############################################################
 
 app.get('/counter', function(req, res){
   res.sendFile(__dirname + '/counter.html');
