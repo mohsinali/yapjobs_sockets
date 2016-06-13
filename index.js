@@ -49,7 +49,7 @@ app.get("/job_application_message", function(req, res){
   clients.forEach(function(value){
     
     if(value.user_id === req.query.user_id){
-      res_obj = { msg: req.query.msg }
+      res_obj = { msg: req.query.msg, job_id: req.query.job_id }
       s = io.sockets.connected[value.socket_id]
       if(s === undefined){
         console.log("Undefined socket: ");
